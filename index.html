@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #containeer{
+            position: relative;
+            border: 2px solid black; 
+            width: 350px;
+            left: 40%;
+           margin-top: 15%;
+           background-image: url(./img.jpg);
+           background-size: cover;
+           background-repeat: no-repeat;
+           border-radius: 5%;
+        }
+
+    </style>
+</head>
+<body style="background-image: url(./weather\ images1.jpg);background-repeat: no-repeat;background-size: cover">
+   
+    <div id="containeer"> 
+        <input id="text1" type="text" placeholder="Enter The City Name">        
+       <button onclick="searchCity()">search</button>
+       <h2 id="a">Weather API</h2>
+       <h1 id="b"></h1>
+       <h4 id="c"></h4>
+        <h4 id="d"></h4>
+         <h4 id="e"></h4>
+       <br/>
+    </div>
+<script>
+   async function eDu(cityName){ 
+        let url= `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=d7e5206331dda3b942704fe00195c0dc&units=metric`
+
+        try{
+            let response=await fetch(url);
+            let data=await response.json();
+            if(data.cod == 200){
+                document.getElementById('a').innerHTML=`Weather in ${data.name}`;
+                document.getElementById('b').innerHTML=`${data.main.temp}∘𝐶`;
+                document.getElementById('c').innerHTML=data.weather[0].description ;
+                document.getElementById('d').innerHTML=`Humidity: ${data.main.humidity}%`;
+                document.getElementById('e').innerHTML=`Wind speed: ${data.wind.speed} km/h`;
+                           }
+            else{
+             document.getElementById('a').innerHTML=`it is a wrong city ${cityName}`
+            }
+        }
+        catch(error){
+            console.log("it is a error",error)
+        }
+    }
+    function searchCity(){
+        let m=document.getElementById("text1").value; 
+        eDu(m);
+        
+    }
+</script>
+</body>
+</html>
